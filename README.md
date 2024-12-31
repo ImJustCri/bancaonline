@@ -29,10 +29,18 @@ gh repo clone ImJustCri/bancaonline
 ```
 
 ### Step 2: Install Dependencies
-Next, install the required dependencies using npm or yarn. Run one of the following commands in the project directory: Using npm:
+Next, install the required dependencies using npm or yarn. Run one of the following commands in the project directory: 
+
+#### Using npm:
 
 ```bash
 npm install
+```
+
+#### Using yarn:
+
+```bash
+yarn install
 ```
 
 ### Step 3: Run the Development Server
