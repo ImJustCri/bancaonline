@@ -19,8 +19,13 @@ Ensure you have the following installed on your machine:
 First, clone the project repository to your local machine. Open your terminal and run:
 
 ```bash
-git clone https://github.com/yourusername/bancaonline.git
-cd bancaonline
+git clone https://github.com/ImJustCri/bancaonline.git
+```
+
+Or alternatively, with GitHub CLI:
+
+```bash
+gh repo clone ImJustCri/bancaonline
 ```
 
 ### Step 2: Install Dependencies
