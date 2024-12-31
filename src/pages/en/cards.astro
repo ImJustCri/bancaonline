@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Count from '../../components/Count.astro';
+import SideBar from '../../components/SideBar.astro';
+import Scripts from '../../components/Scripts.astro';
+import Card from '../../components/Cards.astro';
+import Average from '../../components/Average.astro';
+---
+
+<Layout title="Cards | BancaOnline">
+	<main>
+
+		<SideBar
+			dashboard="../en/",
+			cards="/en/cards",
+			accounts='/en/accounts'
+
+			dashboard_text='Dashboard',
+			cards_text='Cards',
+			accounts_text='Accounts',
+			add_text='Add New Account',
+			logout_text="Log out",
+
+			language_text="Switch to Italian",
+			language_path='../it/',
+
+			add_path='new/'
+		>
+		</SideBar>
+
+		<h1>Credit Cards</h1>
+
+		<ul role="list" class="grid">
+			<Count
+				title="Registered Cards"
+				type="carta"
+			/>
+
+			<Average
+				title="Average Card Balance"
+				type="carta"
+			/>
+
+		</ul>
+		
+		<Card
+			title='List of Credit Cards'
+			id='carte-show'
+
+			user_text='User'
+			code_text='Code'
+			balance_text='Balance'
+			spent_text='Spent'
+			profile_path='profile'
+		/>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin-left: 256px;
+		padding: 1rem;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+	h1 {
+		font-size: 32px;
+		font-weight: 500;
+		line-height: 1;
+		text-align: left;
+		margin-bottom: 1em;
+	}
+
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 16px;
+	}
+
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 16px;
+		padding: 0;
+	}
+
+	canvas {
+		background: red;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		main {
+			margin: auto;
+			padding: 1rem;
+			max-width: calc(100% - 2rem);
+			color: white;
+			font-size: 20px;
+			line-height: 1.6;
+		}
+	}
+</style>
+
+<Scripts></Scripts>
+<script src="/src/scripts/login.ts"></script>

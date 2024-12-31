@@ -1,0 +1,114 @@
+---
+interface Props {
+	title: string;
+
+    username_text: string;
+    password_text: string;
+}
+
+const { title, password_text, username_text } = Astro.props;
+
+import { db, Admins } from 'astro:db';
+const admin = await db.select().from(Admins);
+
+---
+
+<div id="page">
+    <div id="login">
+        <img src="/logo.svg" alt="logo" id="logo">
+
+        <form id="loginForm">
+            <div id="error-message" class="error-message"></div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder={username_text} required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder={password_text} required>
+            </div>
+            <button type="submit">Login</button>
+        </form>        
+    </div>
+</div>
+
+<style>
+    #login {
+        width: 500px;
+        height: 500px;
+        max-width: 500px;
+        min-width: 200px;
+        margin: auto;
+        color: white;
+        background: #1F2937;
+        text-align: center;
+        border-radius: 16px;
+        padding: 64px 32px;
+        border: solid 1px #374151;
+    }
+
+    #page {
+        height: 90vh;
+        align-items: center;
+        display: flex;
+    }
+
+    #loginForm {
+        display: grid;
+        margin: 25% 56px 0px 56px;
+        gap: 32px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    input {
+        height: 32px;
+        border: none;
+        border-bottom: solid white 1px;
+        background: none;
+        color: white;
+        outline: none;
+    }
+
+    label {
+        font-weight: 500;
+    }
+
+    button {
+        background: #111827;
+        border: none;
+        height: 32px;
+        border-radius: 4px;
+        color: white;
+    }
+
+    #logo {
+        width: 256px;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        #loginForm {
+            display: grid;
+            margin: 25% 0px 0px 0px;
+            gap: 32px;
+        }
+
+        #login {
+            padding: 64px 16px;
+            background: none;
+            border: none;
+        }
+
+        button {
+            height: 48px;
+            background: #1F2937;
+        }
+    }
+</style>
+
+<script src="/src/scripts/login.ts"></script>

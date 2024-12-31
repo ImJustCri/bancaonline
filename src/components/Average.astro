@@ -1,0 +1,92 @@
+---
+interface Props {
+	title: string;
+	type: string;
+}
+
+const { title, type } = Astro.props;
+
+import { db, Carte, Conti } from 'astro:db';
+
+const carte = await db.select().from(Carte);
+const conti = await db.select().from(Conti);
+let average: number = 0;
+let count: number = 0;
+
+if (type == "carta") {
+    carte.map(({ balance }) => (
+		average += parseFloat(balance)
+	))
+
+    carte.forEach(item => {
+  		count++;
+	})
+
+    average /= count;
+    average = parseFloat(average.toFixed(2));  // Arrotonda a due cifre e converte in un float
+} else {
+	conti.map(({ balance }) => (
+		average += parseFloat(balance)
+	))
+
+    conti.forEach(item => {
+  		count++;
+	})
+
+    average /= count;
+    average = parseFloat(average.toFixed(2)); // Arrotonda a due cifre e converte in un float
+}
+
+---
+
+<li class="link-card">
+		<h2>
+			{title}
+		</h2>
+		<p id={type}>
+			{average}$
+		</p>
+</li>
+
+<style>
+	.link-card {
+		list-style: none;
+		padding: 1px;
+		background: #1F2937;
+		border: 1px solid #374151;
+		min-height: 148px;
+		max-height: 148px;
+		text-decoration: none;
+		line-height: 1.4;
+		padding: calc(1.5rem - 1px);
+		border-radius: 16px;
+		color: white;
+		opacity: 1;
+	}
+
+	.link-card:hover {
+		background: radial-gradient(circle at 100% 100%, rgba(73, 255, 128, 0.26), #1F2937 30%);
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 600;
+	}
+	p {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		font-size: 64px;
+	}
+
+	@media only screen and (max-width: 1000px) {
+			p {
+				font-size: 48px;
+			}
+
+			.link-card {
+				min-height: 128px;
+				max-height: 196px;
+			}
+	}
+</style>

@@ -1,0 +1,78 @@
+---
+
+interface Props {
+	username: string;
+}
+
+const { username } = Astro.props;
+
+export const prerender = false
+
+import Prof from "../../components/Profile.astro";
+import SideBar from "../../components/SideBar.astro";
+import Scripts from "../../components/Scripts.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Profile | BancaOnline">
+    <main>
+		<SideBar
+			dashboard="../it/",
+			cards="carte",
+			accounts='conti',
+
+			dashboard_text='Dashboard',
+			cards_text='Carte',
+			accounts_text='Conti',
+			add_text='Aggiungi Conto',
+			logout_text="Esci dall'account",
+
+			language_text="Vai all'Inglese",
+			language_path='../en/',
+
+			add_path='nuovo/'
+		>
+		</SideBar>
+
+        <Prof
+			username= "Mario Rossi",
+			corr_text="Corrispondenze",
+			card_text="Carta di Credito",
+			account_text="Conto Bancario"
+		>
+		</Prof>
+    </main>
+</Layout>
+
+
+<style>
+    main {
+		margin-left: 256px;
+		padding: 1rem;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+    @media only screen and (max-width: 1000px) {
+		main {
+			margin: auto;
+			padding: 1rem;
+			max-width: calc(100% - 2rem);
+			color: white;
+			font-size: 20px;
+			line-height: 1.6;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(18ch, 1fr));
+			gap: 16px;
+			padding: 0;
+		}
+
+	}
+</style>
+
+<Scripts></Scripts>

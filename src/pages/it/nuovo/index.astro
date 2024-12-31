@@ -1,0 +1,198 @@
+---
+export const prerender = false
+import Layout from '../../../layouts/Layout.astro';
+import Scripts from '../../../components/Scripts.astro';
+import SideBar from '../../../components/SideBar.astro';
+import { db, Carte, Conti } from 'astro:db';
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const formType = formData.get('type');
+
+  if (formType === "account") {
+	const name = formData.get('name');
+  	const balance = formData.get('balance');
+  	const iban = formData.get('iban');
+  	const spent = formData.get('spent');
+
+ 	if (typeof name === 'string' && typeof balance === 'string' && typeof iban === 'string' && typeof spent === 'string') {
+  		await db.insert(Conti).values({ name, balance, iban, spent });
+  	}
+  }
+  else if (formType === "card") {
+	const name = formData.get('name');
+  	const balance = formData.get('balance');
+  	const code = formData.get('code');
+  	const spent = formData.get('spent');	
+
+	if (typeof name === 'string' && typeof balance === 'string' && typeof code === 'string' && typeof spent === 'string') {
+  		await db.insert(Carte).values({ name, balance, code, spent });
+  	}
+  }
+  else {
+	console.log("Error: Invalid Type");
+  }
+}
+
+const account = await db.select().from(Conti);
+const cards = await db.select().from(Carte);
+---
+
+<Layout title="Nuova Registrazione | BancaOnline">
+	<main>
+
+		<SideBar
+			dashboard="../",
+			cards="../carte",
+			accounts='../conti'
+
+			dashboard_text='Dashboard',
+			cards_text='Carte',
+			accounts_text='Conti',
+			add_text='Aggiungi Conto',
+			logout_text="Esci dall'Account",
+
+			language_text="Passa all'Inglese",
+			language_path='../../en/'
+
+			add_path=''
+		>
+		</SideBar>
+
+		<div class="grid">
+			<div>
+				
+
+				<form method="POST" style="display: grid">
+					<h1>Aggiungi Conto</h1>
+
+					<input id="type" name="type" value="account" readonly/>
+
+					<label for="name">Nome</label>
+					<input id="name" name="name"/>
+				  
+					<label for="balance">Credito</label>
+					<textarea id="balance" name="balance"></textarea>
+		
+					<label for="iban">IBAN</label>
+					<textarea id="iban" name="iban"></textarea>
+		
+					<label for="spent">Spesi</label>
+					<textarea id="spent" name="spent"></textarea>
+				  
+					<button type="submit" >Aggiungi</button>
+				</form>
+			</div>
+
+			<div>
+
+				<form method="POST" style="display: grid">
+					<h1>Aggiungi Carta</h1>
+
+					<input id="type" name="type" value="card" readonly/>
+
+					<label for="name">Nome</label>
+					<input id="name" name="name" />
+				  
+					<label for="balance">Credito</label>
+					<textarea id="balance" name="balance"></textarea>
+		
+					<label for="code">Codice Carta</label>
+					<textarea id="code" name="code"></textarea>
+		
+					<label for="spent">Spesi</label>
+					<textarea id="spent" name="spent"></textarea>
+				  
+					<button type="submit" >Aggiungi</button>
+				</form>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin-left: 256px;
+		padding: 1rem;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+	form {
+		display: grid;
+        padding: 56px 56px;
+        gap: 32px;
+		background: #1F2937;
+        border-radius: 16px;
+        border: solid 1px #374151;
+	}
+
+	h1 {
+		font-size: 32px;
+		font-weight: 500;
+		line-height: 1;
+		text-align: left;
+		margin-bottom: 1em;
+	}
+
+	input, textarea {
+        height: 32px;
+        border: none;
+        border-bottom: solid white 1px;
+        background: none;
+        color: white;
+        outline: none;
+    }
+
+    label {
+        font-weight: 500;
+    }
+
+    button {
+        background: #111827;
+        border: none;
+        height: 32px;
+        border-radius: 4px;
+        color: white;
+    }
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 16px;
+		padding: 0;
+	}
+
+	#type {
+		display: none;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		main {
+			margin: auto;
+			padding: 1rem;
+			max-width: calc(100% - 2rem);
+			color: white;
+			font-size: 20px;
+			line-height: 1.6;
+		}
+
+		form {
+            display: grid;
+            margin: 0px 0px 0px 0px;
+			padding: 32px;
+            gap: 32px;
+        }
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(16ch, 1fr));
+			gap: 16px;
+			padding: 0;
+		}
+	}
+</style>
+
+<Scripts></Scripts>

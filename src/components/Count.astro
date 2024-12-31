@@ -1,0 +1,76 @@
+---
+interface Props {
+	title: string;
+	type: string;
+}
+
+const { title, type } = Astro.props;
+
+import { db, Carte,  Conti } from 'astro:db';
+
+const carte = await db.select().from(Carte);
+const conti = await db.select().from(Conti);
+let count = 0;
+
+if (type == "carta") {
+	carte.forEach(item => {
+  		count++;
+	})
+}
+else {
+	conti.forEach(item => {
+  		count++;
+	})
+}
+
+---
+
+<li class="link-card">
+		<h2>
+			{title}
+		</h2>
+		<p id={type}>
+			{count}
+		</p>
+</li>
+
+<style>
+	.link-card {
+		list-style: none;
+		padding: calc(1.5rem - 1px);
+		background-color: #1F2937;
+		background-image: none;
+		background-size: 400%;
+		border-radius: 16px;
+		background-position: 100%;
+		border: 1px solid #374151;
+		min-height: 148px;
+		max-height: 148px;
+		opacity: 1;
+		line-height: 1.4;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		font-weight: 600;
+	}
+	
+	p {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		font-size: 64px;
+	}
+
+	@media only screen and (max-width: 1000px) {
+			p {
+				font-size: 48px;
+			}
+
+			.link-card {
+				min-height: 128px;
+				max-height: 196px;
+			}
+	}
+</style>

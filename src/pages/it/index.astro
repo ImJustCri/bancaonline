@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Count from '../../components/Count.astro';
+import Account from '../../components/Account.astro';
+import SideBar from '../../components/SideBar.astro';
+import Scripts from '../../components/Scripts.astro';
+import Card from '../../components/Cards.astro';
+import Average from '../../components/Average.astro';
+---
+
+<Layout title="Dashboard | BancaOnline">
+	<main>
+		<SideBar
+			dashboard="../it/",
+			cards="carte",
+			accounts='conti',
+
+			dashboard_text='Dashboard',
+			cards_text='Carte',
+			accounts_text='Conti',
+			add_text='Aggiungi Conto',
+			logout_text="Esci dall'account",
+
+			language_text="Vai all'Inglese",
+			language_path='../en/',
+
+			add_path='nuovo/'
+		>
+		</SideBar>
+
+		<h1>Dashboard</h1>
+
+		<ul role="list" class="grid">
+			<Count
+				title="Conti Registrati"
+				type="conto"
+			/>
+			<Count
+				title="Carte Registrate"
+				type="carta"
+			/>
+			
+			<Average
+				title="Media depositi conti"
+				type="conti"
+			/>
+
+			<Average
+				title="Media credito carte"
+				type="carta"
+			/>
+
+		</ul>
+
+		<p id="provaa"></p>
+
+		<Account
+			title='Elenco Conti Bancari'
+			id='conti-show'
+
+			user_text='Utente'
+			balance_text='Deposito'
+			spent_text='Spesi'
+			profile_path='profilo'
+		/>
+		
+		<Card
+			title='Elenco Carte di Credito'
+			id='carte-show'
+
+			user_text='Utente'
+			code_text='Codice'
+			balance_text='Deposito'
+			spent_text='Spesi'
+			profile_path='profilo'
+		/>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin-left: 256px;
+		padding: 1rem;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+	h1 {
+		font-size: 32px;
+		font-weight: 500;
+		line-height: 1;
+		text-align: left;
+		margin-bottom: 1em;
+	}
+
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 16px;
+	}
+
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 16px;
+		padding: 0;
+	}
+
+	canvas {
+		background: red;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		main {
+			margin: auto;
+			padding: 1rem;
+			max-width: calc(100% - 2rem);
+			color: white;
+			font-size: 20px;
+			line-height: 1.6;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(18ch, 1fr));
+			gap: 16px;
+			padding: 0;
+		}
+
+	}
+</style>
+
+<Scripts></Scripts>
+<script src="/src/scripts/login.ts"></script>

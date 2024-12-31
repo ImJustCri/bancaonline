@@ -1,0 +1,11 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const userLanguage = navigator.language;
+
+        if (userLanguage.startsWith('it')) {
+            window.location.href = 'it/login';
+        } else {
+            window.location.href = 'en/login';
+        }
+    });
+</script>

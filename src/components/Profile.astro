@@ -1,0 +1,124 @@
+---
+interface Props {
+    username: string;
+    corr_text: string;
+    card_text: string;
+    account_text: string;
+}
+
+const { username, corr_text, card_text, account_text } = Astro.props;
+
+// Database
+import { db, Conti, Carte, like } from 'astro:db';
+
+const conti = await db.select().from(Conti).where(
+    like(Conti.name, username)
+);
+
+const carte = await db.select().from(Carte).where(
+    like(Carte.name, username)
+);
+---
+
+<main>
+    <div id="container">
+        <div id="flex">
+            <div>
+                <box-icon type='solid' name='user-circle' size="48px" color="white"></box-icon>
+            </div>
+    
+            <div>
+                <h1>{username}</h1>
+            </div>
+        </div>
+
+        <h2>{corr_text}</h2>
+
+        <div id="overflow-table">
+            <table>
+                {   
+                    carte.map(({ balance, spent, code }) => (
+                        
+                            <tr>
+                                <td>{card_text}</td>
+                                <td>{code}</td>
+                                <td>{balance}$</td>
+                                <td>{spent}$</td>
+                            </tr>
+                        
+                    ))
+                }
+        
+                {
+                    conti.map(({ balance, spent, iban }) => (
+                        
+                        <tr>
+                            <td>{account_text}</td>
+                            <td>{iban}</td>
+                            <td>{balance}$</td>
+                            <td>{spent}$</td>
+                        </tr>
+                    
+                    ))
+                }
+            </table>
+        </div>
+    </div>
+</main>
+
+<style>
+    h1 {
+		font-size: 32px;
+		font-weight: 500;
+		line-height: 1;
+		text-align: left;
+		margin-bottom: 1em;
+	}
+
+    h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		font-weight: 600;
+	}
+
+    #flex {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    #container {
+        padding: calc(1.5rem - 1px);
+		background-color: #1F2937;
+		background-image: none;
+		border-radius: 16px;
+		border: 1px solid #374151;
+		background-position: 100%;
+		min-height: 564px;
+		min-width: auto;
+		margin-bottom: 16px;
+    }
+
+    td {
+		padding-bottom: 8px;
+		padding-top: 8px;
+		border-bottom: solid 0.5px #374151;
+		font-size: 16px;
+		padding-left: 16px;
+        padding-right: 32px;
+	}
+    
+    table {
+		width: 100%;
+		margin-top: 24px;
+		font-weight: 400;
+		overflow-x: hidden;
+	}
+
+    #overflow-table {
+		overflow-x: auto;
+		max-width: inherit;
+	}
+</style>

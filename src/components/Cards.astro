@@ -1,0 +1,111 @@
+---
+interface Props {
+	title: string;
+	id: string;
+
+	user_text: string;
+	code_text: string;
+	balance_text: string;
+	spent_text: string;
+
+	profile_path: string;
+}
+
+const { title, id, user_text, code_text, balance_text, spent_text, profile_path} = Astro.props;
+
+// Database
+import { db, Carte } from 'astro:db';
+import Profile from './Profile.astro';
+
+const carte = await db.select().from(Carte);
+
+---
+
+<li class="link-card">
+		<h2>
+			{title}
+
+			<div id="overflow-table">
+				<table id={id} class="table">
+
+					<th>{user_text}</th>
+					<th>{code_text}</th>
+					<th>{balance_text}</th>
+					<th>{spent_text}</th>
+	
+					{
+						carte.map(({ name, balance, spent, code }) => (
+							
+								<tr>
+									<td><a href={profile_path}><i class='bx bxs-credit-card'></i> {name}</a></td>
+									<td>{code}</td>
+									<td>{balance}$</td>
+									<td>{spent}$</td>
+								</tr>
+							
+						))
+					}
+				</table>
+			</div>	
+		</h2>
+</li>
+
+<style>
+		.link-card {
+			list-style: none;
+			padding: calc(1.5rem - 1px);
+			background-color: #1F2937;
+			background-image: none;
+			border-radius: 16px;
+			border: 1px solid #374151;
+			background-position: 100%;
+			min-height: 564px;
+			min-width: auto;
+			margin-bottom: 16px;
+		}
+
+		h2 {
+			margin: 0;
+			font-size: 1.25rem;
+			transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+		
+		p {
+			margin-bottom: 0;
+		}
+
+		.table {
+			width: 100%;
+			margin-top: 24px;
+			font-weight: 400;
+			overflow-x: hidden;
+		}
+		
+		td {
+			padding-bottom: 8px;
+			padding-top: 8px;
+			border-bottom: solid 0.5px #374151;
+			font-size: 16px;
+			padding-left: 16px;
+		}
+
+		#overflow-table {
+			overflow-x: auto;
+			max-width: inherit;
+		}
+
+		th {
+			background: #374151;
+			text-align: left;
+			padding-left: 16px;
+			padding-right: 128px;
+			border-radius: 4px;
+			font-weight: 600;
+		}
+		
+		a {
+			text-decoration: none;
+			color: white;
+		}
+</style>
+
