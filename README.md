@@ -13,7 +13,11 @@
 ### Prerequisites
 Ensure you have the following installed on your machine:
 
-  - Node.js: Version 14 or higher.
+  - Node.js: v18.17.1 or v20.3.0, v22.0.0 or higher (v19 and v21 are not supported)
+
+  - Text Editor
+
+  - Terminal (the website must be started through a CLI)
 
 ### Step 1: Clone the Repository
 First, clone the project repository to your local machine. Open your terminal and run:
